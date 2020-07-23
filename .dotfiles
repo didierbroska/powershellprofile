@@ -1,0 +1,32 @@
+$PROFILE_DIR = "${HOME}\Documents\PowerShell"
+
+install:
+    if $OS == Windows:
+        $DOTNET_INSTALL_URL = "https://dot.net/v1/dotnet-install.ps1"
+        # TODO
+
+    if $OS == Linux:
+        $DOTNET_INSTALL_URL = "https://dot.net/v1/dotnet-install.sh"
+        # TODO
+
+symlink:
+    if $OS == Windows:
+        # New-Item -ItemType SymbolicLink -Target ${HOME}\Sources\PowerShellProfile\Bin\ -Path ${HOME}\Documents\PowerShell\Bin\ -Force
+        print "Copy Bin Folder in profile"
+        "${LOCAL_DIR}\Bin"->"${PROFILE_DIR}\Bin"
+
+        # New-Item -ItemType SymbolicLink -Target ${HOME}\Sources\PowerShellProfile\Helpers\ -Path ${HOME}\Documents\PowerShell\Helpers\ -Force
+        print "Copy Helpers folder in profile"
+        "${LOCAL_DIR}\Helpers"->"${PROFILE_DIR}\Helpers"
+
+        # New-Item -ItemType SymbolicLink -Target ${HOME}\Sources\PowerShellProfile\Microsoft.PowerShell_profile.ps1 -Path ${HOME}\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 -Force
+        print "Copy PowerShell Profile"
+        "${LOCAL}\Microsoft.PowerShell_profile.ps1"->$PROFILE_DIR\Microsoft.PowerShell_profile.ps1
+
+        # New-Item -ItemType SymbolicLink -Target ${HOME}\Sources\PowerShellProfile\Microsoft.VSCode_profile.ps1 -Path C:\Users\xavie\Documents\PowerShell\Microsoft.VSCode_profile.ps1 -Force
+        if Installed(VSCode):
+            print "Copy VSCode PowerShell Profile"
+            "${LOCAL}\Microsoft.VSCode_profile.ps1"->$PROFILE_DIR\Microsoft.VSCode_profile.ps1
+
+    if $OS == Linux:
+        # TODO
